@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Guía de Defensa - Segundo Entregable</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 16mm 14mm 16mm 14mm;
+            @bottom-right {
+                content: counter(page);
+            }
+        }
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+            color: #1e293b;
+            line-height: 1.5;
+            font-size: 10pt;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        .header-box {
+            border-bottom: 2px solid #2563eb;
+            padding-bottom: 12px;
+            margin-bottom: 18px;
+        }
+        .badge {
+            display: inline-block;
+            background-color: #eff6ff;
+            color: #1d4ed8;
+            font-size: 8pt;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 9999px;
+            border: 1px solid #bfdbfe;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+        h1 {
+            color: #0f172a;
+            font-size: 18pt;
+            margin: 0 0 6px 0;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        .subtitle {
+            color: #475569;
+            font-size: 10.5pt;
+            margin: 0 0 10px 0;
+            font-weight: 500;
+        }
+        .team-box {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 8px 14px;
+            font-size: 9.5pt;
+            margin-top: 6px;
+        }
+        .team-box strong {
+            color: #0f172a;
+        }
+        h2 {
+            color: #1e3a8a;
+            font-size: 12.5pt;
+            border-bottom: 1.5px solid #e2e8f0;
+            padding-bottom: 4px;
+            margin-top: 18px;
+            margin-bottom: 10px;
+            font-weight: 700;
+            page-break-after: avoid;
+        }
+        h3 {
+            color: #0f172a;
+            font-size: 11pt;
+            margin-top: 14px;
+            margin-bottom: 6px;
+            font-weight: 700;
+            page-break-after: avoid;
+        }
+        p {
+            margin: 0 0 8px 0;
+            text-align: justify;
+        }
+        .alert-box {
+            background-color: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 8px 12px;
+            border-radius: 0 6px 6px 0;
+            margin: 10px 0;
+            font-size: 9pt;
+        }
+        .alert-box strong {
+            color: #991b1b;
+        }
+        .info-box {
+            background-color: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 8px 12px;
+            border-radius: 0 6px 6px 0;
+            margin: 10px 0;
+            font-size: 9pt;
+        }
+        .info-box strong {
+            color: #1d4ed8;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 9pt;
+            page-break-inside: avoid;
+        }
+        th, td {
+            border: 1px solid #cbd5e1;
+            padding: 6px 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f1f5f9;
+            color: #0f172a;
+            font-weight: 700;
+        }
+        tr:nth-child(even) td {
+            background-color: #f8fafc;
+        }
+        .code-inline {
+            background-color: #f1f5f9;
+            color: #0f172a;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 8.5pt;
+            border: 1px solid #e2e8f0;
+        }
+        .question-card {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 10px 12px;
+            margin-bottom: 10px;
+            page-break-inside: avoid;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+        }
+        .question-title {
+            color: #1e3a8a;
+            font-weight: 700;
+            font-size: 10pt;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: baseline;
+        }
+        .question-num {
+            background-color: #2563eb;
+            color: #ffffff;
+            font-size: 7.5pt;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 3px;
+            margin-right: 7px;
+            flex-shrink: 0;
+        }
+        .answer-text {
+            color: #334155;
+            font-size: 9pt;
+            margin: 0;
+            line-height: 1.45;
+        }
+        .flow-step {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            padding: 6px 10px;
+            margin-bottom: 5px;
+            font-size: 8.5pt;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            page-break-inside: avoid;
+        }
+        .flow-step-num {
+            background-color: #3b82f6;
+            color: white;
+            font-weight: bold;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 7.5pt;
+            flex-shrink: 0;
+        }
+        .page-break {
+            page-break-before: always;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-box">
+        <span class="badge">Documento Oficial de Preparación</span>
+        <h1>Guía Maestra y Banco de Preguntas para la Defensa Oral</h1>
+        <div class="subtitle">Segundo Entregable - Lenguajes de Programación II (TUDS - Universidad Católica de Córdoba)</div>
+        <div class="team-box">
+            <div><strong>Integrantes:</strong> Ignacio Ortiz &nbsp;|&nbsp; Leonardo Manrique &nbsp;|&nbsp; Luis Poblete</div>
+        </div>
+    </div>
+
+    <h2>1. Resumen Técnico del Proyecto</h2>
+    <p>El sistema es una API RESTful desarrollada con <strong>Spring Boot 3.2.5</strong>, <strong>Spring Security 6</strong> y <strong>Spring Data JPA</strong> para la gestión de Usuarios y Reservas Gastronómicas. Implementa arquitectura limpia en capas desacopladas (Controller, Service, Repository, Entity, DTO y Mapper), persistencia relacional con H2 y MySQL, autenticación HTTP Basic stateless y control de accesos basado en roles (RBAC).</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Componente</th>
+                <th>Tecnología / Implementación</th>
+                <th>Responsabilidad Principal</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Framework & Java</strong></td>
+                <td>Java 21 LTS / Spring Boot 3.2.5</td>
+                <td>Núcleo de la API REST y contenedor de inyección de dependencias.</td>
+            </tr>
+            <tr>
+                <td><strong>Seguridad</strong></td>
+                <td>Spring Security + Basic Auth</td>
+                <td>Filtro de peticiones HTTP, autenticación stateless y RBAC.</td>
+            </tr>
+            <tr>
+                <td><strong>Cifrado</strong></td>
+                <td>BCryptPasswordEncoder (Salt)</td>
+                <td>Hash unidireccional de contraseñas almacenadas en la base de datos.</td>
+            </tr>
+            <tr>
+                <td><strong>Persistencia</strong></td>
+                <td>Spring Data JPA + Hibernate</td>
+                <td>Mapeo relacional de entidades, repositorios y consulta por relación.</td>
+            </tr>
+            <tr>
+                <td><strong>Transferencia</strong></td>
+                <td>DTOs + Mappers dedicados</td>
+                <td>Aislamiento del modelo de datos para evitar exposición de credenciales.</td>
+            </tr>
+            <tr>
+                <td><strong>Validaciones</strong></td>
+                <td>Jakarta Bean Validation (@Valid)</td>
+                <td>Validación de parámetros de entrada antes de alcanzar el servicio.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>2. Conceptos Teóricos Fundamentales (Preguntas Obligatorias)</h2>
+
+    <div class="alert-box">
+        <strong>Criterio Crucial de la Cátedra:</strong> Cada integrante del grupo debe saber explicar con total soltura la diferencia entre <em>Autenticación</em> y <em>Autorización</em>, y señalar en qué partes exactas del código fuente ocurre cada una.
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Dimensión</th>
+                <th>Autenticación (Authentication)</th>
+                <th>Autorización (Authorization)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Pregunta Clave</strong></td>
+                <td><strong>¿Quién eres?</strong> (Verificación de identidad).</td>
+                <td><strong>¿Qué tienes permitido hacer?</strong> (Permisos sobre recursos).</td>
+            </tr>
+            <tr>
+                <td><strong>Implementación</strong></td>
+                <td><span class="code-inline">CustomUserDetailsService</span> + <span class="code-inline">BCryptPasswordEncoder</span>.</td>
+                <td><span class="code-inline">SecurityConfig</span> con <span class="code-inline">.hasRole("ADMIN")</span>.</td>
+            </tr>
+            <tr>
+                <td><strong>Código HTTP al fallar</strong></td>
+                <td><span class="code-inline">401 Unauthorized</span> (credenciales incorrectas/ausentes).</td>
+                <td><span class="code-inline">403 Forbidden</span> (usuario válido pero sin rol suficiente).</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Basic Auth y Arquitectura Stateless</h3>
+    <p><strong>¿Qué significa Stateless?</strong> La aplicación no almacena sesiones en memoria del servidor ni utiliza cookies (<span class="code-inline">JSESSIONID</span>). Se configuró mediante <span class="code-inline">sessionCreationPolicy(SessionCreationPolicy.STATELESS)</span>. Cada petición HTTP es autónoma y debe incluir sus credenciales en la cabecera <span class="code-inline">Authorization: Basic &lt;base64&gt;</span>.</p>
+    <p><strong>¿Base64 es cifrado?</strong> <strong>NO</strong>. Base64 es una simple codificación reversible. Por eso, en entornos reales de producción es mandatorio utilizar <strong>HTTPS (TLS/SSL)</strong> para cifrar el canal de comunicación completo.</p>
+
+    <h3>Hashing vs. Cifrado (BCrypt y Salt)</h3>
+    <p><strong>Diferencia:</strong> El cifrado es bidireccional (reversible con clave). El <strong>hash</strong> es una función matemática <strong>unidireccional</strong> (irreversible). No se puede reconstruir la contraseña original a partir del hash.</p>
+    <p><strong>¿Cómo valida Spring Security la contraseña?</strong> Spring Security toma la contraseña enviada en la petición, le aplica la función BCrypt con el <em>salt</em> guardado en el hash existente, y compara ambos hashes con <span class="code-inline">passwordEncoder.matches(plana, hash)</span>.</p>
+    <p><strong>¿Qué es el Salt?</strong> Una secuencia pseudoaleatoria que BCrypt genera automáticamente e inserta en el hash (<span class="code-inline">$2a$10$...</span>). Asegura que si dos usuarios eligen la misma contraseña, sus hashes en base de datos sean completamente distintos, neutralizando ataques de tablas precalculadas (Rainbow Tables).</p>
+
+    <div class="page-break"></div>
+
+    <h2>3. Flujo Paso a Paso de una Petición Protegida</h2>
+
+    <div class="flow-step">
+        <div class="flow-step-num">1</div>
+        <div>El cliente envía la petición (ej: <span class="code-inline">GET /reservas</span>) con cabecera <span class="code-inline">Authorization: Basic &lt;usuario:clave_en_base64&gt;</span>.</div>
+    </div>
+    <div class="flow-step">
+        <div class="flow-step-num">2</div>
+        <div>El filtro <span class="code-inline">BasicAuthenticationFilter</span> intercepta la petición y extrae las credenciales.</div>
+    </div>
+    <div class="flow-step">
+        <div class="flow-step-num">3</div>
+        <div>Invoca a <span class="code-inline">AuthenticationManager</span>, que delega en <span class="code-inline">CustomUserDetailsService.loadUserByUsername()</span>.</div>
+    </div>
+    <div class="flow-step">
+        <div class="flow-step-num">4</div>
+        <div>Se busca el usuario por correo en <span class="code-inline">UsuarioRepository</span> y se obtiene su contraseña hasheada y rol.</div>
+    </div>
+    <div class="flow-step">
+        <div class="flow-step-num">5</div>
+        <div><span class="code-inline">BCryptPasswordEncoder.matches()</span> compara la contraseña provista contra el hash guardado.</div>
+    </div>
+    <div class="flow-step">
+        <div class="flow-step-num">6</div>
+        <div>Si coincide, se establece el objeto <span class="code-inline">Authentication</span> en <span class="code-inline">SecurityContextHolder</span> (identidad autenticada).</div>
+    </div>
+    <div class="flow-step">
+        <div class="flow-step-num">7</div>
+        <div>El interceptor de autorización contrasta los roles contra las reglas de <span class="code-inline">SecurityConfig</span>. Si cumple, pasa al Controller; si no, retorna <span class="code-inline">403 Forbidden</span>.</div>
+    </div>
+
+    <h2>4. Banco Extenso de Preguntas y Respuestas para la Defensa</h2>
+
+    <h3>Bloque A: Seguridad y Autenticación</h3>
+
+    <div class="question-card">
+        <div class="question-title"><span class="question-num">P1</span>¿Por qué implementaron UserDetailsService y no usaron usuarios en memoria?</div>
+        <div class="answer-text">Porque en un sistema productivo los usuarios deben persistir en base de datos. Con <span class="code-inline">CustomUserDetailsService</span> buscamos al usuario por correo dinámicamente en <span class="code-inline">UsuarioRepository</span>, permitiendo que cualquier nuevo usuario registrado a través de la API pública pueda iniciar sesión de inmediato sin requerir reinicios.</div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-title"><span class="question-num">P2</span>¿Cómo asocia Spring Security el rol del usuario con las reglas de acceso?</div>
+        <div class="answer-text">En <span class="code-inline">CustomUserDetailsService</span> convertimos el enum <span class="code-inline">Rol</span> en una autoridad con el prefijo estándar <span class="code-inline">ROLE_</span> (<span class="code-inline">new SimpleGrantedAuthority("ROLE_" + rol.name())</span>). Luego, en <span class="code-inline">SecurityConfig</span>, al declarar <span class="code-inline">.hasRole("ADMIN")</span>, Spring Security comprueba automáticamente la presencia de la autoridad <span class="code-inline">ROLE_ADMIN</span>.</div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-title"><span class="question-num">P3</span>¿Por qué deshabilitaron CSRF (csrf.disable())?</div>
+        <div class="answer-text">CSRF aplica a aplicaciones web basadas en navegador que mantienen sesiones mediante cookies. Al diseñar una API REST con arquitectura <strong>Stateless</strong> y autenticación HTTP Basic donde cada petición envía credenciales en cabeceras y no almacena cookies, el riesgo de CSRF no existe y mantenerlo habilitado bloquearía innecesariamente las peticiones POST, PUT y DELETE.</div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-title"><span class="question-num">P4</span>¿Qué sucede si un usuario envía la contraseña ya hasheada en el Basic Auth de Postman?</div>
+        <div class="answer-text">La autenticación fallará invariablemente con <strong>401 Unauthorized</strong>. Basic Auth espera la contraseña original en texto plano. Si se envía el hash, el motor de seguridad volverá a hashear esa cadena, obteniendo un valor completamente disímil al almacenado.</div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-title"><span class="question-num">P5</span>¿Por qué se configuró headers.frameOptions().disable()?</div>
+        <div class="answer-text">Por motivos de desarrollo local: la consola web de H2 (<span class="code-inline">/h2-console</span>) está construida con frames HTML. Spring Security por defecto añade la cabecera de seguridad <span class="code-inline">X-Frame-Options: DENY</span> para prevenir ataques de Clickjacking. Deshabilitarlo para los frames permite usar la consola web para inspeccionar la base de datos visualmente.</div>
+    </div>
+
+    <h3>Bloque B: Control de Acceso por Roles (RBAC)</h3>
+
+    <div class="question-card">
+        <div class="question-title"><span class="question-num">P6</span>¿Qué operación del dominio restringieron y a qué rol específico?</div>
+        <div class="answer-text">Restringimos la eliminación física de recursos (<span class="code-inline">DELETE /usuarios/**</span> y <span class="code-inline">DELETE /reservas/**</span>) exclusivamente al rol <strong>ADMIN</strong>. Si un usuario autenticado con rol estándar <strong>USER</strong> intenta invocar un método DELETE, el sistema deniega el acceso respondiendo <strong>403 Forbidden</strong>.</div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-title"><span class="question-num">P7</span>¿Cómo se evita que un usuario se auto-asigne el rol ADMIN al registrarse?</div>
+        <div class="answer-text">A través de la separación estricta en el DTO de entrada: <span class="code-inline">UsuarioRegistroDTO</span> no contiene la propiedad <span class="code-inline">rol</span>. Asimismo, en <span class="code-inline">UsuarioService.registrar()</span> y <span class="code-inline">UsuarioMapper</span> se fija programáticamente <span class="code-inline">Rol.USER</span>, impidiendo cualquier escalada de privilegios desde peticiones públicas.</div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-title"><span class="question-num">P8</span>¿Cómo crearon el administrador de prueba si el registro público no lo permite?</div>
+        <div class="answer-text">Creamos el componente <span class="code-inline">DataInitializer</span> (que implementa <span class="code-inline">CommandLineRunner</span>). Al iniciar la aplicación, comprueba si existe el usuario <span class="code-inline">admin@ucc.edu.ar</span>; si no está, lo inserta con rol <span class="code-inline">Rol.ADMIN</span> y su contraseña cifrada con BCrypt (<span class="code-inline">Admin123!</span>).</div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h3>Bloque C: Arquitectura, DTOs y Mappers</h3>
+
+    <div class="question-card">
+        <div class="question-title"><span class="question-num">P9</span>¿Por qué no devuelven directamente las entidades JPA en los Controllers?</div>
+        <div class="answer-text">
+            1. <strong>Fuga de Información (Data Leakage):</strong> Exponer la entidad <span class="code-inline">Usuario</span> enviaría el hash de la contraseña en las respuestas JSON.<br>
+            2. <strong>Bucle infinito de serialización:</strong> Las relaciones JPA bidireccionales provocan recursión infinita en Jackson (<span class="code-inline">StackOverflowError</span>).<br>
+            3. <strong>Desacoplamiento:</strong> Permite modificar la base de datos sin alterar el contrato público consumido por el cliente.
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-title"><span class="question-num">P10</span>¿Cómo aseguraron que la contraseña no se exponga en consultas por relación?</div>
+        <div class="answer-text">El DTO <span class="code-inline">ReservaResponseDTO</span> incluye un <span class="code-inline">UsuarioResponseDTO</span> anidado, el cual únicamente proyecta <span class="code-inline">id</span>, <span class="code-inline">nombre</span>, <span class="code-inline">correo</span>, <span class="code-inline">edad</span> y <span class="code-inline">rol</span>. El atributo contraseña no existe en el DTO. Adicionalmente, la entidad <span class="code-inline">Usuario</span> tiene <span class="code-inline">@JsonIgnore</span> en su campo password como medida de defensa en profundidad.</div>
+    </div>
+
+    <h3>Bloque D: Persistencia y Relaciones JPA</h3>
+
+    <div class="question-card">
+        <div class="question-title"><span class="question-num">P11</span>Expliquen cómo modelaron la relación entre Usuario y Reserva.</div>
+        <div class="answer-text">Es una relación muchos-a-uno real (<span class="code-inline">@ManyToOne</span>) en la entidad <span class="code-inline">Reserva</span> con la columna de unión <span class="code-inline">usuario_id</span> (<span class="code-inline">@JoinColumn(nullable = false)</span>). Cada reserva pertenece a un único usuario del sistema.</div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-title"><span class="question-num">P12</span>¿Cómo implementaron la consulta requerida que utiliza esa relación?</div>
+        <div class="answer-text">En <span class="code-inline">ReservaRepository</span> definimos el método de consulta derivada <span class="code-inline">findByUsuario_Id(Long usuarioId)</span>. Spring Data JPA genera la consulta filtrando por la foreign key. Se expone en el endpoint <span class="code-inline">GET /reservas/usuario/{usuarioId}</span>, verificando previamente la existencia del usuario para devolver 404 si no existe.</div>
+    </div>
+
+    <h3>Bloque E: Validaciones y Códigos de Estado HTTP</h3>
+
+    <div class="question-card">
+        <div class="question-title"><span class="question-num">P13</span>¿Cómo controlan el registro de correos duplicados y qué código HTTP devuelven?</div>
+        <div class="answer-text">Mediante doble barrera: comprobación lógica en <span class="code-inline">UsuarioService</span> con <span class="code-inline">existsByCorreo()</span> lanzando <span class="code-inline">CorreoYaExisteException</span>, y restricción física en base de datos con <span class="code-inline">@Column(unique = true)</span>. <span class="code-inline">GlobalExceptionHandler</span> intercepta ambas y retorna <strong>409 Conflict</strong> con mensaje claro.</div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-title"><span class="question-num">P14</span>¿Qué diferencia hay entre el código 400 y el código 404 en su API?</div>
+        <div class="answer-text">
+            <strong>400 Bad Request:</strong> Error en los datos enviados en la petición (ej: contraseña menor a 6 caracteres, correo sin formato válido, edad negativa).<br>
+            <strong>404 Not Found:</strong> La sintaxis es válida pero el identificador del recurso no existe en la base de datos (ej: usuario o reserva inexistente).
+        </div>
+    </div>
+
+    <h3>Bloque F: Preguntas Desafiantes / "Trampa"</h3>
+
+    <div class="question-card">
+        <div class="question-title"><span class="question-num">P15</span>¿Qué riesgo existe si la relación Reserva -> Usuario se define con FetchType.LAZY?</div>
+        <div class="answer-text">Si se accede a las propiedades del usuario fuera de la sesión transaccional de Hibernate, se produce una <span class=\"code-inline\">LazyInitializationException</span>. En nuestro caso, como la conversión de DTOs se realiza dentro de los métodos anotados con <span class=\"code-inline\">@Transactional</span> en la capa Service, la sesión permanece abierta y se ejecuta de manera segura.</div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-title"><span class="question-num">P16</span>¿Por qué se limpian los correos con .trim().toLowerCase()?</div>
+        <div class="answer-text">Para normalizar el identificador. En los correos electrónicos la identidad es case-insensitive: <span class="code-inline">User@Ucc.edu.ar</span> y <span class="code-inline">user@ucc.edu.ar</span> corresponden a la misma casilla. Normalizar evita duplicados por variaciones de mayúsculas y espacios accidentales.</div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>5. Hoja de Ruta para la Demostración en Vivo (Postman Live Demo)</h2>
+    <p>Para la defensa práctica en vivo ante la mesa examinadora, ejecuten las peticiones en el siguiente orden secuencial:</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Paso</th>
+                <th>Acción / Petición</th>
+                <th>Método y Ruta</th>
+                <th>Auth / Credenciales</th>
+                <th>Resultado Esperado</th>
+                <th>Qué Explicar a los Profesores</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>1</strong></td>
+                <td>Registro válido</td>
+                <td><span class="code-inline">POST /auth/registro</span></td>
+                <td>Público (Sin auth)</td>
+                <td><span class="code-inline">201 Created</span></td>
+                <td>Mostrar que el JSON de respuesta tiene rol USER y <strong>no incluye password ni hash</strong>.</td>
+            </tr>
+            <tr>
+                <td><strong>2</strong></td>
+                <td>Correo duplicado</td>
+                <td><span class="code-inline">POST /auth/registro</span></td>
+                <td>Público (Sin auth)</td>
+                <td><span class="code-inline">409 Conflict</span></td>
+                <td>Reenviar la misma petición anterior. Explicar la comprobación en service y la restricción única en base de datos.</td>
+            </tr>
+            <tr>
+                <td><strong>3</strong></td>
+                <td>Datos inválidos</td>
+                <td><span class="code-inline">POST /auth/registro</span></td>
+                <td>Público (Sin auth)</td>
+                <td><span class="code-inline">400 Bad Request</span></td>
+                <td>Enviar clave corta (&lt;6 caracteres) y email sin '@'. Mostrar el detalle de errores validado por @Valid.</td>
+            </tr>
+            <tr>
+                <td><strong>4</strong></td>
+                <td>Ruta protegida sin auth</td>
+                <td><span class="code-inline">GET /reservas</span></td>
+                <td>Sin cabecera Auth</td>
+                <td><span class="code-inline">401 Unauthorized</span></td>
+                <td>Demostrar que las rutas del dominio están resguardadas por el filtro de Spring Security.</td>
+            </tr>
+            <tr>
+                <td><strong>5</strong></td>
+                <td>Acceso autenticado USER</td>
+                <td><span class="code-inline">GET /reservas</span></td>
+                <td>Basic: user@ucc.edu.ar / User123!</td>
+                <td><span class="code-inline">200 OK</span></td>
+                <td>Mostrar que con credenciales válidas se accede y se obtienen las reservas en formato JSON.</td>
+            </tr>
+            <tr>
+                <td><strong>6</strong></td>
+                <td>Operación restringida USER</td>
+                <td><span class="code-inline">DELETE /usuarios/1</span></td>
+                <td>Basic: user@ucc.edu.ar / User123!</td>
+                <td><span class="code-inline">403 Forbidden</span></td>
+                <td><strong>Punto clave:</strong> Explicar la diferencia entre 401 (no autenticado) y 403 (autenticado pero sin rol suficiente).</td>
+            </tr>
+            <tr>
+                <td><strong>7</strong></td>
+                <td>Operación permitida ADMIN</td>
+                <td><span class="code-inline">DELETE /reservas/1</span></td>
+                <td>Basic: admin@ucc.edu.ar / Admin123!</td>
+                <td><span class="code-inline">204 No Content</span></td>
+                <td>Demostrar que el rol ADMIN sí posee el privilegio para ejecutar el borrado de entidades.</td>
+            </tr>
+            <tr>
+                <td><strong>8</strong></td>
+                <td>Consulta por relación JPA</td>
+                <td><span class="code-inline">GET /reservas/usuario/2</span></td>
+                <td>Basic: user@ucc.edu.ar / User123!</td>
+                <td><span class="code-inline">200 OK</span></td>
+                <td>Comprobar la relación JPA Reserva $\to$ Usuario y ratificar que el usuario anidado tampoco expone contraseñas.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="info-box">
+        <strong>Verificación visual en Base de Datos:</strong> Abrir en el navegador <span class="code-inline">http://localhost:8080/h2-console</span> (JDBC URL: <span class="code-inline">jdbc:h2:file:./data/reservas_db</span>, Usuario: <span class="code-inline">sa</span>) y ejecutar <span class="code-inline">SELECT * FROM USUARIOS;</span> para mostrar que las contraseñas están almacenadas únicamente como hash BCrypt (<span class="code-inline">$2a$10$...</span>).
+    </div>
+
+</body>
+</html>
