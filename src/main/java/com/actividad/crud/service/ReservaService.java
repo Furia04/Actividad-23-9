@@ -1,19 +1,20 @@
 package com.actividad.crud.service;
 
 import com.actividad.crud.dto.ReservaDTO;
+import com.actividad.crud.dto.ReservaResponseDTO;
 import com.actividad.crud.exception.ReservaNoEncontradaException;
-import com.actividad.crud.exception.UsuarioNoEncontradoException;
 import com.actividad.crud.exception.ValidacionException;
+import com.actividad.crud.mapper.ReservaMapper;
 import com.actividad.crud.model.Reserva;
 import com.actividad.crud.model.Usuario;
 import com.actividad.crud.repository.ReservaRepository;
-import com.actividad.crud.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,55 +22,67 @@ import java.util.List;
 public class ReservaService {
 
     private final ReservaRepository reservaRepository;
-    private final UsuarioRepository usuarioRepository;
+    private final UsuarioService usuarioService;
+    private final ReservaMapper reservaMapper;
 
     @Transactional(readOnly = true)
-    public List<Reserva> listar() {
+    public List<ReservaResponseDTO> listar() {
         log.info("Consultando todas las reservas");
-        return reservaRepository.findAll();
+        return reservaRepository.findAll().stream()
+                .map(reservaMapper::toResponseDTO)
+                .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public Reserva buscarPorId(Long id) {
+    public ReservaResponseDTO buscarPorId(Long id) {
         log.info("Buscando reserva con id: {}", id);
+        Reserva reserva = buscarEntidadPorId(id);
+        return reservaMapper.toResponseDTO(reserva);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ReservaResponseDTO> buscarPorUsuarioId(Long usuarioId) {
+        log.info("Consultando reservas asociadas al usuarioId: {}", usuarioId);
+        // Validamos que el usuario exista
+        usuarioService.buscarEntidadPorId(usuarioId);
+        return reservaRepository.findByUsuario_Id(usuarioId).stream()
+                .map(reservaMapper::toResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public Reserva buscarEntidadPorId(Long id) {
         return reservaRepository.findById(id)
                 .orElseThrow(() -> new ReservaNoEncontradaException(id));
     }
 
     @Transactional
-    public Reserva crear(ReservaDTO dto) {
+    public ReservaResponseDTO crear(ReservaDTO dto) {
         log.info("Creando reserva para usuarioId: {}", dto.getUsuarioId());
 
         if (dto.getCantidadPersonas() == null || dto.getCantidadPersonas() < 1) {
             throw new ValidacionException("La cantidad de personas debe ser de al menos 1");
         }
 
-        Usuario usuario = usuarioRepository.findById(dto.getUsuarioId())
-                .orElseThrow(() -> new UsuarioNoEncontradoException(dto.getUsuarioId()));
+        Usuario usuario = usuarioService.buscarEntidadPorId(dto.getUsuarioId());
+        Reserva reserva = reservaMapper.toEntity(dto, usuario);
+        Reserva guardada = reservaRepository.save(reserva);
 
-        Reserva reserva = Reserva.builder()
-                .fechaHora(dto.getFechaHora())
-                .cantidadPersonas(dto.getCantidadPersonas())
-                .observaciones(dto.getObservaciones())
-                .usuario(usuario)
-                .build();
-
-        return reservaRepository.save(reserva);
+        return reservaMapper.toResponseDTO(guardada);
     }
 
     @Transactional
-    public Reserva modificar(Long id, ReservaDTO dto) {
+    public ReservaResponseDTO modificar(Long id, ReservaDTO dto) {
         log.info("Modificando reserva con id: {}", id);
 
-        Reserva reservaExistente = buscarPorId(id);
+        Reserva reservaExistente = buscarEntidadPorId(id);
 
         if (dto.getCantidadPersonas() == null || dto.getCantidadPersonas() < 1) {
             throw new ValidacionException("La cantidad de personas debe ser de al menos 1");
         }
 
         if (dto.getUsuarioId() != null && !dto.getUsuarioId().equals(reservaExistente.getUsuario().getId())) {
-            Usuario nuevoUsuario = usuarioRepository.findById(dto.getUsuarioId())
-                    .orElseThrow(() -> new UsuarioNoEncontradoException(dto.getUsuarioId()));
+            Usuario nuevoUsuario = usuarioService.buscarEntidadPorId(dto.getUsuarioId());
             reservaExistente.setUsuario(nuevoUsuario);
         }
 
@@ -77,13 +90,14 @@ public class ReservaService {
         reservaExistente.setCantidadPersonas(dto.getCantidadPersonas());
         reservaExistente.setObservaciones(dto.getObservaciones());
 
-        return reservaRepository.save(reservaExistente);
+        Reserva actualizada = reservaRepository.save(reservaExistente);
+        return reservaMapper.toResponseDTO(actualizada);
     }
 
     @Transactional
     public void eliminar(Long id) {
         log.info("Eliminando reserva con id: {}", id);
-        Reserva reservaExistente = buscarPorId(id);
+        Reserva reservaExistente = buscarEntidadPorId(id);
         reservaRepository.delete(reservaExistente);
     }
 }

@@ -1,7 +1,7 @@
 package com.actividad.crud.controller;
 
 import com.actividad.crud.dto.ReservaDTO;
-import com.actividad.crud.model.Reserva;
+import com.actividad.crud.dto.ReservaResponseDTO;
 import com.actividad.crud.service.ReservaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,24 +19,29 @@ public class ReservaController {
     private final ReservaService reservaService;
 
     @GetMapping
-    public ResponseEntity<List<Reserva>> listar() {
+    public ResponseEntity<List<ReservaResponseDTO>> listar() {
         return ResponseEntity.ok(reservaService.listar());
     }
 
     @GetMapping({"/{id}", "/{id}/"})
-    public ResponseEntity<Reserva> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<ReservaResponseDTO> buscarPorId(@PathVariable Long id) {
         return ResponseEntity.ok(reservaService.buscarPorId(id));
     }
 
+    @GetMapping({"/usuario/{usuarioId}", "/usuario/{usuarioId}/"})
+    public ResponseEntity<List<ReservaResponseDTO>> buscarPorUsuario(@PathVariable Long usuarioId) {
+        return ResponseEntity.ok(reservaService.buscarPorUsuarioId(usuarioId));
+    }
+
     @PostMapping
-    public ResponseEntity<Reserva> crear(@Valid @RequestBody ReservaDTO dto) {
-        Reserva nuevaReserva = reservaService.crear(dto);
+    public ResponseEntity<ReservaResponseDTO> crear(@Valid @RequestBody ReservaDTO dto) {
+        ReservaResponseDTO nuevaReserva = reservaService.crear(dto);
         return new ResponseEntity<>(nuevaReserva, HttpStatus.CREATED);
     }
 
     @PutMapping({"/{id}", "/{id}/"})
-    public ResponseEntity<Reserva> modificar(@PathVariable Long id, @Valid @RequestBody ReservaDTO dto) {
-        Reserva reservaActualizada = reservaService.modificar(id, dto);
+    public ResponseEntity<ReservaResponseDTO> modificar(@PathVariable Long id, @Valid @RequestBody ReservaDTO dto) {
+        ReservaResponseDTO reservaActualizada = reservaService.modificar(id, dto);
         return ResponseEntity.ok(reservaActualizada);
     }
 

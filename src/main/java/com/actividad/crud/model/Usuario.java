@@ -1,6 +1,7 @@
 package com.actividad.crud.model;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
@@ -27,10 +28,20 @@ public class Usuario {
     @NotBlank(message = "El correo no puede estar vacío")
     @Email(message = "El formato de correo es inválido")
     @JsonAlias({"email", "mail"})
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String correo;
 
     @Min(value = 0, message = "La edad no puede ser negativa")
     @Column(nullable = false)
     private Integer edad;
+
+    @NotBlank(message = "La contraseña no puede estar vacía")
+    @Column(nullable = false)
+    @JsonIgnore
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    @Builder.Default
+    private Rol rol = Rol.USER;
 }

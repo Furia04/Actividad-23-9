@@ -1,11 +1,15 @@
 package com.actividad.crud;
 
 import com.actividad.crud.dto.ReservaDTO;
+import com.actividad.crud.dto.ReservaResponseDTO;
 import com.actividad.crud.dto.UsuarioDTO;
+import com.actividad.crud.dto.UsuarioRegistroDTO;
+import com.actividad.crud.dto.UsuarioResponseDTO;
+import com.actividad.crud.exception.CorreoYaExisteException;
 import com.actividad.crud.exception.ReservaNoEncontradaException;
 import com.actividad.crud.exception.UsuarioNoEncontradoException;
-import com.actividad.crud.model.Reserva;
 import com.actividad.crud.model.Usuario;
+import com.actividad.crud.repository.UsuarioRepository;
 import com.actividad.crud.service.ReservaService;
 import com.actividad.crud.service.UsuarioService;
 import org.junit.jupiter.api.Test;
@@ -26,75 +30,93 @@ class CrudApplicationTests {
     @Autowired
     private ReservaService reservaService;
 
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
     @Test
-    void testCrudCompletoUsuarioYReserva() {
-        // 1. Crear Usuario
-        UsuarioDTO userDto = UsuarioDTO.builder()
+    void testCrudCompletoYSeguridadUsuarioYReserva() {
+        // 1. Registrar Usuario con contraseña
+        UsuarioRegistroDTO userDto = UsuarioRegistroDTO.builder()
                 .nombre("Carlos Rodriguez")
-                .correo("carlos@mail.com")
+                .correo("carlos.test@mail.com")
+                .password("Password123!")
                 .edad(28)
                 .build();
-        Usuario usuarioCreado = usuarioService.crear(userDto);
+        UsuarioResponseDTO usuarioCreado = usuarioService.registrar(userDto);
         assertNotNull(usuarioCreado.getId());
         assertEquals("Carlos Rodriguez", usuarioCreado.getNombre());
+        assertEquals("carlos.test@mail.com", usuarioCreado.getCorreo());
 
-        // 2. Listar y Buscar Usuario por ID
-        List<Usuario> usuarios = usuarioService.listar();
+        // Verificar que en la base de datos la contraseña está hasheada con BCrypt
+        Usuario entidadEnDb = usuarioRepository.findById(usuarioCreado.getId()).orElseThrow();
+        assertNotEquals("Password123!", entidadEnDb.getPassword());
+        assertTrue(entidadEnDb.getPassword().startsWith("$2a$") || entidadEnDb.getPassword().startsWith("$2b$"));
+
+        // 2. Verificar que el correo repetido lanza CorreoYaExisteException (409)
+        assertThrows(CorreoYaExisteException.class, () -> usuarioService.registrar(userDto));
+
+        // 3. Listar y Buscar Usuario por ID
+        List<UsuarioResponseDTO> usuarios = usuarioService.listar();
         assertFalse(usuarios.isEmpty());
 
-        Usuario usuarioEncontrado = usuarioService.buscarPorId(usuarioCreado.getId());
-        assertEquals("carlos@mail.com", usuarioEncontrado.getCorreo());
+        UsuarioResponseDTO usuarioEncontrado = usuarioService.buscarPorId(usuarioCreado.getId());
+        assertEquals("carlos.test@mail.com", usuarioEncontrado.getCorreo());
 
-        // 3. Modificar Usuario
+        // 4. Modificar Usuario
         UsuarioDTO userUpdateDto = UsuarioDTO.builder()
                 .nombre("Carlos R. Rodriguez")
                 .correo("carlos.nuevo@mail.com")
                 .edad(29)
                 .build();
-        Usuario usuarioModificado = usuarioService.modificar(usuarioCreado.getId(), userUpdateDto);
+        UsuarioResponseDTO usuarioModificado = usuarioService.modificar(usuarioCreado.getId(), userUpdateDto);
         assertEquals("Carlos R. Rodriguez", usuarioModificado.getNombre());
         assertEquals("carlos.nuevo@mail.com", usuarioModificado.getCorreo());
 
-        // 4. Crear Reserva para este Usuario
+        // 5. Crear Reserva para este Usuario
         ReservaDTO reservaDto = ReservaDTO.builder()
                 .fechaHora(LocalDateTime.of(2026, 10, 15, 21, 0, 0))
                 .cantidadPersonas(4)
                 .observaciones("Mesa exterior")
                 .usuarioId(usuarioCreado.getId())
                 .build();
-        Reserva reservaCreada = reservaService.crear(reservaDto);
+        ReservaResponseDTO reservaCreada = reservaService.crear(reservaDto);
         assertNotNull(reservaCreada.getId());
         assertEquals(4, reservaCreada.getCantidadPersonas());
         assertEquals(usuarioCreado.getId(), reservaCreada.getUsuarioId());
 
-        // 5. Listar y Buscar Reserva por ID
-        List<Reserva> reservas = reservaService.listar();
+        // 6. Consulta por relación JPA: reservas del usuario
+        List<ReservaResponseDTO> reservasDelUsuario = reservaService.buscarPorUsuarioId(usuarioCreado.getId());
+        assertFalse(reservasDelUsuario.isEmpty());
+        assertEquals(1, reservasDelUsuario.size());
+
+        // 7. Listar y Buscar Reserva por ID
+        List<ReservaResponseDTO> reservas = reservaService.listar();
         assertFalse(reservas.isEmpty());
 
-        Reserva reservaEncontrada = reservaService.buscarPorId(reservaCreada.getId());
+        ReservaResponseDTO reservaEncontrada = reservaService.buscarPorId(reservaCreada.getId());
         assertEquals("Mesa exterior", reservaEncontrada.getObservaciones());
 
-        // 6. Modificar Reserva
+        // 8. Modificar Reserva
         ReservaDTO reservaUpdateDto = ReservaDTO.builder()
                 .fechaHora(LocalDateTime.of(2026, 10, 15, 21, 30, 0))
                 .cantidadPersonas(5)
                 .observaciones("Mesa interior salón principal")
                 .usuarioId(usuarioCreado.getId())
                 .build();
-        Reserva reservaModificada = reservaService.modificar(reservaCreada.getId(), reservaUpdateDto);
+        ReservaResponseDTO reservaModificada = reservaService.modificar(reservaCreada.getId(), reservaUpdateDto);
         assertEquals(5, reservaModificada.getCantidadPersonas());
         assertEquals("Mesa interior salón principal", reservaModificada.getObservaciones());
 
-        // 7. Probar Excepción Propia al buscar IDs inexistentes
+        // 9. Excepciones de no encontrado
         assertThrows(UsuarioNoEncontradoException.class, () -> usuarioService.buscarPorId(999999L));
         assertThrows(ReservaNoEncontradaException.class, () -> reservaService.buscarPorId(999999L));
 
-        // 8. Eliminar Reserva y verificar
+        // 10. Eliminar Reserva
         Long idReserva = reservaCreada.getId();
         reservaService.eliminar(idReserva);
         assertThrows(ReservaNoEncontradaException.class, () -> reservaService.buscarPorId(idReserva));
 
-        // 9. Eliminar Usuario y verificar
+        // 11. Eliminar Usuario
         Long idUsuario = usuarioCreado.getId();
         usuarioService.eliminar(idUsuario);
         assertThrows(UsuarioNoEncontradoException.class, () -> usuarioService.buscarPorId(idUsuario));

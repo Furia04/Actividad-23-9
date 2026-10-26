@@ -1,7 +1,10 @@
 package com.actividad.crud.exception;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -33,6 +36,26 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(CorreoYaExisteException.class)
+    public ResponseEntity<ErrorDetalle> manejarCorreoYaExiste(CorreoYaExisteException ex) {
+        ErrorDetalle error = new ErrorDetalle(
+                HttpStatus.CONFLICT.value(),
+                "Conflicto de recursos",
+                ex.getMessage()
+        );
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ErrorDetalle> manejarViolacionIntegridad(DataIntegrityViolationException ex) {
+        ErrorDetalle error = new ErrorDetalle(
+                HttpStatus.CONFLICT.value(),
+                "Conflicto de integridad en base de datos",
+                "El registro infringe una restricción única (posible correo duplicado u orden referencial)"
+        );
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+
     @ExceptionHandler(ValidacionException.class)
     public ResponseEntity<ErrorDetalle> manejarValidacion(ValidacionException ex) {
         ErrorDetalle error = new ErrorDetalle(
@@ -56,6 +79,26 @@ public class GlobalExceptionHandler {
                 errores
         );
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorDetalle> manejarAccesoDenegado(AccessDeniedException ex) {
+        ErrorDetalle error = new ErrorDetalle(
+                HttpStatus.FORBIDDEN.value(),
+                "Acceso denegado",
+                "No tienes permisos suficientes para realizar esta operación (requiere rol superior)"
+        );
+        return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ErrorDetalle> manejarAutenticacion(AuthenticationException ex) {
+        ErrorDetalle error = new ErrorDetalle(
+                HttpStatus.UNAUTHORIZED.value(),
+                "No autenticado",
+                "Credenciales inválidas o no provistas"
+        );
+        return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(NoResourceFoundException.class)
