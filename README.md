@@ -1,6 +1,12 @@
 # Segundo Entregable - CRUD de Usuarios y Reservas con Spring Security y RBAC
 
-Trabajo práctico de Laboratorio de Programación 2 (TUDS - Universidad Católica de Córdoba).  
+**Lenguajes de Programación II - Universidad Católica de Córdoba (TUDS)**
+
+### Integrantes:
+- **Ignacio Ortiz**
+- **Leonardo Manrique**
+- **Luis Poblete**
+
 API REST desarrollada con **Spring Boot 3**, **Spring Security** y **Spring Data JPA** para gestionar Usuarios y Reservas gastronómicas, incorporando autenticación HTTP Basic (stateless), control de acceso basado en roles (RBAC), encriptación con BCrypt, capas DTO/Mapper para evitar la exposición de credenciales y consultas por relación JPA.
 
 ---
